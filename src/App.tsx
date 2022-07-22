@@ -1,9 +1,27 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const url = 'https://finnhub.io/api/v1/search?q=apple&token=cbcvu7qad3i1jffu0650';
+
+  const search = async () => {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      const message = `An error has occured: ${response.status}`;
+      throw new Error(message);
+    }
+  
+    console.log("test");
+    return await response.json();
+  }
+
+  useEffect(() => {
+    console.log(JSON.stringify(search()));
+  },[])
+  
 
   return (
     <div className="App">
