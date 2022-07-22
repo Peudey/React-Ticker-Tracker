@@ -4,13 +4,15 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0);
-  const url = 'https://finnhub.io/api/v1/search?q=apple&token=cbcvu7qad3i1jffu0650';
-
+  const [desc, setDesc] = useState("");
+  const [symbol, setSymbol] = useState("");
+  
   const search = async () => {
+    const url = 'https://finnhub.io/api/v1/search?q=AAPL&token=cbcvu7qad3i1jffu0650';
     const response = await fetch(url);
 
     if (!response.ok) {
-      const message = `An error has occured: ${response.status}`;
+      const message = `unexpected error: ${response.status}`;
       throw new Error(message);
     }
   
@@ -19,7 +21,10 @@ function App() {
   }
 
   useEffect(() => {
-    console.log(JSON.stringify(search()));
+    var json = search();
+    json.then(data => {setDesc(data.result[0].description);
+      setSymbol(data.result[0].displaySymbol);
+    });
   },[])
   
 
@@ -45,6 +50,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <p>{symbol} || {desc}</p>
     </div>
   )
 }
