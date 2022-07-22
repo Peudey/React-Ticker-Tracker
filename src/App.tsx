@@ -20,6 +20,18 @@ function App() {
     return await response.json();
   }
 
+  const getTickerData = async() => {
+    const url = "https://finnhub.io/api/v1/stock/candle?symbol=AAPL&resolution=1&from=1631022248&to=1631627048&token=cbcvu7qad3i1jffu0650";
+    const response = await fetch(url);
+
+    if(!response.ok) {
+      const message = `unexpected error: ${response.status}`;
+      throw new Error(message);
+    }
+
+    return await response.json();
+  }
+
   useEffect(() => {
     var json = search();
     json.then(data => {setDesc(data.result[0].description);
