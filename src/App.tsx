@@ -40,7 +40,8 @@ function App() {
       setSymbol(data.result[0].displaySymbol);
     });
     var json2 = getTickerData();
-    json2.then(data => {setTickerData(data.result)});
+    json2.then(data => console.log(data));
+    json2.then(data => {setTickerData(data)});
   },[])
   
 
@@ -72,7 +73,9 @@ function App() {
         width={300}
         data={[
           {key: new Date(tickerData?.t[0]), data: tickerData?.c[0]},
-          {key: new Date(tickerData?.t[1]), data: tickerData?.c[1]}
+          {key: new Date(tickerData?.t[1]), data: tickerData?.c[1]},
+          {key: new Date(tickerData?.t[2]), data: tickerData?.c[2]},
+          {key: new Date(tickerData?.t[3]), data: tickerData?.c[3]}
         ]}
       />
     </div>
