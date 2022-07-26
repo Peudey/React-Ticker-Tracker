@@ -7,7 +7,7 @@ function App() {
   const [count, setCount] = useState(0);
   const [desc, setDesc] = useState("");
   const [symbol, setSymbol] = useState("");
-  const [tickerData, setTickerData] = useState<any>();
+  const [tickerData, setTickerData] = useState<any[]>([]);
   
   const search = async () => {
     const url = 'https://finnhub.io/api/v1/search?q=AAPL&token=cbcvu7qad3i1jffu0650';
@@ -23,7 +23,7 @@ function App() {
   }
 
   const getTickerData = async() => {
-    const url = "https://finnhub.io/api/v1/stock/candle?symbol=AAPL&resolution=D&from=1631022248&to=1631627048&token=cbcvu7qad3i1jffu0650";
+    const url = `https://finnhub.io/api/v1/stock/candle?symbol=AAPL&resolution=D&from=${Math.floor(Date.now() / 1000)-2630000}&to=${Math.floor(Date.now() / 1000)}&token=cbcvu7qad3i1jffu0650`;
     const response = await fetch(url);
 
     if(!response.ok) {
@@ -35,13 +35,22 @@ function App() {
   }
 
   useEffect(() => {
+    var formattedData:any[] = [];
     var json = search();
     json.then(data => {setDesc(data.result[0].description);
       setSymbol(data.result[0].displaySymbol);
     });
     var json2 = getTickerData();
     json2.then(data => console.log(data));
-    json2.then(data => {setTickerData(data)});
+    json2.then(data => {
+      for(var i = 0; i < data.c?.length; i++){
+        console.log(data?.t[i]);
+        formattedData.push({key: new Date(data?.t[i] * 1000), data: data?.c[i]});
+      }
+      setTickerData(formattedData);
+      console.log(tickerData);
+    });
+
   },[])
   
 
@@ -69,14 +78,9 @@ function App() {
       </p>
       <p>{symbol} || {desc}</p>
       <AreaChart 
-        height={300}
-        width={300}
-        data={[
-          {key: new Date(tickerData?.t[0]), data: tickerData?.c[0]},
-          {key: new Date(tickerData?.t[1]), data: tickerData?.c[1]},
-          {key: new Date(tickerData?.t[2]), data: tickerData?.c[2]},
-          {key: new Date(tickerData?.t[3]), data: tickerData?.c[3]}
-        ]}
+        height={600}
+        width={600}
+        data={tickerData}
       />
     </div>
   )
