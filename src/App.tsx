@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 import { AreaChart } from 'reaviz';
+import { waitForDebugger } from 'inspector';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -9,8 +10,8 @@ function App() {
   const [symbol, setSymbol] = useState("");
   const [tickerData, setTickerData] = useState<any[]>([]);
   
-  const search = async () => {
-    const url = 'https://finnhub.io/api/v1/search?q=AAPL&token=cbcvu7qad3i1jffu0650';
+  const search = async (symbol:string) => {
+    const url = `https://finnhub.io/api/v1/search?q=${symbol}&token=cbcvu7qad3i1jffu0650`;
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -22,8 +23,8 @@ function App() {
     return await response.json();
   }
 
-  const getTickerData = async() => {
-    const url = `https://finnhub.io/api/v1/stock/candle?symbol=AAPL&resolution=D&from=${Math.floor(Date.now() / 1000)-2630000}&to=${Math.floor(Date.now() / 1000)}&token=cbcvu7qad3i1jffu0650`;
+  const getTickerData = async(symbol:string) => {
+    const url = `https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=D&from=${Math.floor(Date.now() / 1000)-2630000}&to=${Math.floor(Date.now() / 1000)}&token=cbcvu7qad3i1jffu0650`;
     const response = await fetch(url);
 
     if(!response.ok) {
@@ -36,11 +37,11 @@ function App() {
 
   useEffect(() => {
     var formattedData:any[] = [];
-    var json = search();
+    var json = search("AAPL");
     json.then(data => {setDesc(data.result[0].description);
       setSymbol(data.result[0].displaySymbol);
     });
-    var json2 = getTickerData();
+    var json2 = getTickerData("AAPL");
     json2.then(data => console.log(data));
     json2.then(data => {
       for(var i = 0; i < data.c?.length; i++){
