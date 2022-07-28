@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
-import { AreaChart } from 'reaviz';
-import { waitForDebugger } from 'inspector';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -35,6 +34,18 @@ function App() {
     return await response.json();
   }
 
+  const getGridMarks = (data:any[]) => {
+    var grid:any[] = [];
+    var distance = (data.length/4)-1;
+    console.log(distance);
+    if(distance > 0){
+      grid.push(data[distance].name);
+      grid.push(data[distance*2].name);
+      grid.push(data[distance*3].name);
+    }
+    console.log(grid);
+  }
+
   useEffect(() => {
     var formattedData:any[] = [];
     var json = search("AAPL");
@@ -45,15 +56,13 @@ function App() {
     json2.then(data => console.log(data));
     json2.then(data => {
       for(var i = 0; i < data.c?.length; i++){
-        console.log(data?.t[i]);
-        formattedData.push({key: new Date(data?.t[i] * 1000), data: data?.c[i]});
+        formattedData.push({name: new Date(data?.t[i] * 1000).toDateString() , amt: data?.c[i]});
       }
+    }).then(() => {
       setTickerData(formattedData);
-      console.log(tickerData);
     });
 
   },[])
-  
 
   return (
     <div className="App">
@@ -78,11 +87,13 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
       <p>{symbol} || {desc}</p>
-      <AreaChart 
-        height={600}
-        width={600}
-        data={tickerData}
-      />
+      <LineChart width={600} height={600} margin={{ top: 5, right: 20, bottom: 50, left: 0 }} data={tickerData} >
+        <Line type="monotone" dataKey="amt" stroke="#8884d8" />
+        <CartesianGrid stroke="#ccc"/>
+        <XAxis dataKey="name" interval={7} angle={-35}/>
+        <YAxis />
+        <Tooltip />
+      </LineChart>
     </div>
   )
 }
