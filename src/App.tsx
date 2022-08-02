@@ -1,38 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { search, getTickerData } from './utils/stockApi'; 
 
 function App() {
   const [count, setCount] = useState(0);
   const [desc, setDesc] = useState("");
   const [symbol, setSymbol] = useState("");
   const [tickerData, setTickerData] = useState<any[]>([]);
-  
-  const search = async (symbol:string) => {
-    const url = `https://finnhub.io/api/v1/search?q=${symbol}&token=cbcvu7qad3i1jffu0650`;
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      const message = `unexpected error: ${response.status}`;
-      throw new Error(message);
-    }
-  
-    console.log("test");
-    return await response.json();
-  }
-
-  const getTickerData = async(symbol:string) => {
-    const url = `https://finnhub.io/api/v1/stock/candle?symbol=${symbol}&resolution=D&from=${Math.floor(Date.now() / 1000)-2630000}&to=${Math.floor(Date.now() / 1000)}&token=cbcvu7qad3i1jffu0650`;
-    const response = await fetch(url);
-
-    if(!response.ok) {
-      const message = `unexpected error: ${response.status}`;
-      throw new Error(message);
-    }
-
-    return await response.json();
-  }
 
   const getGridMarks = (data:any[]) => {
     var grid:any[] = [];
