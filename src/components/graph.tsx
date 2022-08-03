@@ -40,7 +40,7 @@ function Graph() {
 
     return (
         <div>
-            <p>{symbol} || {desc}</p>
+            <p>{symbol} ({desc})</p>
             <LineChart width={600} height={600} margin={{ top: 5, right: 20, bottom: 50, left: 0 }} data={tickerData} >
                 <Line type="monotone" dataKey="amt" stroke="#8884d8" />
                 <CartesianGrid stroke="#ccc"/>
