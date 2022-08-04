@@ -40,7 +40,7 @@ function Graph() {
       var formattedData:any[] = [];
       var json = await getTickerData(searchText);
       for(var i = 0; i < json.c?.length; i++){
-        formattedData.push({date: new Date(json?.t[i] * 1000).toLocaleDateString('en-US') , Value: json?.c[i].toFixed(2)});
+        formattedData.push({date: new Date(json?.t[i] * 1000).toLocaleDateString('en-US', {timeZone:"Europe/London"}) , Value: json?.c[i].toFixed(2)});
       }
       setTickerData(formattedData);
     }
