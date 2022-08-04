@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import { search, getTickerData } from '../utils/stockApi';
+import Search from "./searchBar"
 
 function Graph() {
     const [count, setCount] = useState(0);
@@ -45,17 +46,12 @@ function Graph() {
 
     return (
         <div>
-            <form action="#" onSubmit={(e) => {e.preventDefault(); handleSearch()}}>
-              <input 
-                type="text"
-                name="searchText"
-                id="searchText"
-                value={searchText}
-                onChange={e => setSearchText(e.target.value)}
-              />
-              <button type="submit">search</button>
-            </form>
             <p>{symbol} ({desc})</p>
+            <Search 
+              searchText={searchText}
+              setSearchText={setSearchText}
+              handleSearch = {handleSearch}
+            />
             <LineChart width={600} height={600} margin={{ top: 5, right: 20, bottom: 50, left: 0 }} data={tickerData} >
                 <Line type="monotone" dataKey="amt" stroke="#8884d8" />
                 <CartesianGrid stroke="#ccc"/>
