@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
 import { search, getTickerData } from '../utils/stockApi';
 import Search from "./searchBar"
+import News from './news';
 
 function Graph() {
     const [desc, setDesc] = useState("ALPHABET INC-CL A");
@@ -34,7 +35,7 @@ function Graph() {
       setTickerData(formattedData);
     }
 
-    const handleFilter = (length: number) =>{
+    const handleFilter = (length: number) => {
       setTimeframe(length);
     }
 
@@ -43,8 +44,8 @@ function Graph() {
             <p>{symbol} ({desc})</p>
             <div>
               <Search 
-                searchText={searchText}
-                setSearchText={setSearchText}
+                searchText = {searchText}
+                setSearchText = {setSearchText}
                 handleSearch = {handleSearch}
               />
               <button onClick={() => handleFilter(7)}>7</button>
@@ -65,6 +66,7 @@ function Graph() {
                   <Tooltip labelStyle={{color: "black"}} itemStyle={{color: "black"}}/>
               </AreaChart>
             </span>
+            <News symbol={symbol}/>
         </div>
     )
 }
