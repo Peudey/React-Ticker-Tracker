@@ -1,7 +1,7 @@
 interface searchProps{
     searchText: string
     setSearchText:React.Dispatch<React.SetStateAction<string>>
-    handleSearch:()=>boolean
+    handleSearch:()=>any
 }
 
 function Search({searchText, setSearchText, handleSearch}:searchProps){
