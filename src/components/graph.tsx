@@ -20,12 +20,13 @@ function Graph() {
       json.then(data => {
         setDesc(data.result[0].description);
         setSymbol(data.result[0].displaySymbol);
+        setSearchText("");
       });
     }
 
     const refreshChart = async() => {
       var formattedData:any[] = [];
-      var json = await getTickerData(searchText, timeframe);
+      var json = await getTickerData(symbol, timeframe);
       for(var i = 0; i < json.c?.length; i++) {
         formattedData.push({
           date: new Date(json?.t[i] * 1000).toLocaleDateString('en-US', {timeZone:"Europe/London"}),

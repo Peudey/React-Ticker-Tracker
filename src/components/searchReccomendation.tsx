@@ -1,9 +1,9 @@
 interface reccomendationProps{
+    reccomendation: string
     setSearchText:React.Dispatch<React.SetStateAction<string>>;
 }
 
-function SearchReccomendation({setSearchText}:reccomendationProps){
-    const[reccomendation, setReccomendation] = ("");
+function SearchReccomendation({reccomendation, setSearchText}:reccomendationProps){
 
     return(
         <div onClick={()=>setSearchText(reccomendation)}>

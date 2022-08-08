@@ -1,21 +1,33 @@
 import SearchReccomendation from './searchReccomendation';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {search} from '../utils/stockApi'
 
 interface searchProps{
     searchText: string
     setSearchText:React.Dispatch<React.SetStateAction<string>>
-    handleSearch:()=>any
+    handleSearch:() => any
 }
 
 function Search({searchText, setSearchText, handleSearch}:searchProps){
     const [reccomendations, setReccomendations] = useState<string[]>([]);
 
+    useEffect(() =>{
+      const timer = setTimeout(()=>{
+        fetchResults()
+      }, 500);
+      
+      return(()=>{clearTimeout(timer);})
+    },[searchText])
+
     const fetchResults = async() => {
+      var recs:string[] = [];
+      if(searchText===""){
+        setReccomendations(recs);
+        return
+      };
         var json = await search(searchText);
         console.log(json);
-        var recs = [];
-        for(var i = 0; i < 3 || i < length - 1; i++){
+        for(var i = 0; i < 3 && i < json.result.length - 1; i++){
             console.log(json.result[i].displaySymbol);
           recs.push(json.result[i].displaySymbol);
         }
@@ -27,15 +39,25 @@ function Search({searchText, setSearchText, handleSearch}:searchProps){
         <div>            
             <form action="#" onSubmit={(e) => {e.preventDefault(); handleSearch()}}>
             <input 
-            type="text"
-            name="searchText"
-            id="searchText"
-            value={searchText}
-            onChange={e => {
-                setSearchText(e.target.value);
-                fetchResults();
-            }}
+              type="text"
+              name="searchText"
+              id="searchText"
+              value={searchText}
+              onChange={e => {
+                  setSearchText(e.target.value);
+              }}
             />
+            <div className='reccomendations'>
+              {reccomendations.map((rec, idx) => {
+                  return(
+                    <SearchReccomendation 
+                      reccomendation={rec}
+                      setSearchText={setSearchText}
+                    />
+                  )
+                })
+              }
+            </div>
             <button type="submit">search</button>
         </form>
     </div>
