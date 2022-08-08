@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
 import { search, getTickerData } from '../utils/stockApi';
 import Search from "./searchBar"
+import News from './news';
 
 function Graph() {
     const [desc, setDesc] = useState("ALPHABET INC-CL A");
@@ -19,13 +20,14 @@ function Graph() {
       json.then(data => {
         setDesc(data.result[0].description);
         setSymbol(data.result[0].displaySymbol);
+        setSearchText("");
       });
     }
 
     const refreshChart = async() => {
       var formattedData:any[] = [];
-      var json = await getTickerData(searchText, timeframe);
-      for(var i = 0; i < json.c?.length; i++){
+      var json = await getTickerData(symbol, timeframe);
+      for(var i = 0; i < json.c?.length; i++) {
         formattedData.push({
           date: new Date(json?.t[i] * 1000).toLocaleDateString('en-US', {timeZone:"Europe/London"}),
           Value: json?.c[i].toFixed(2)
@@ -34,7 +36,7 @@ function Graph() {
       setTickerData(formattedData);
     }
 
-    const handleFilter = (length: number) =>{
+    const handleFilter = (length: number) => {
       setTimeframe(length);
     }
 
@@ -43,8 +45,8 @@ function Graph() {
             <p>{symbol} ({desc})</p>
             <div>
               <Search 
-                searchText={searchText}
-                setSearchText={setSearchText}
+                searchText = {searchText}
+                setSearchText = {setSearchText}
                 handleSearch = {handleSearch}
               />
               <button onClick={() => handleFilter(7)}>7</button>
@@ -65,6 +67,7 @@ function Graph() {
                   <Tooltip labelStyle={{color: "black"}} itemStyle={{color: "black"}}/>
               </AreaChart>
             </span>
+            <News symbol={symbol}/>
         </div>
     )
 }
