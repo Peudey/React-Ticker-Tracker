@@ -6,7 +6,7 @@ interface reccomendationProps{
 function SearchReccomendation({reccomendation, setSearchText}:reccomendationProps){
 
     return(
-        <div onClick={()=>setSearchText(reccomendation)}>
+        <div className="reccomendation" onClick={()=>setSearchText(reccomendation)}>
             {reccomendation}
         </div>
     )

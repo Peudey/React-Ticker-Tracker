@@ -54,7 +54,7 @@ function Graph() {
               <button onClick={() => handleFilter(365)}>Y</button>
             </div>
             <span className='chart'>
-              <AreaChart width={1200} height={600} margin={{ top: 20, right: 20, bottom: 50, left: 0 }} data={tickerData} >
+              <AreaChart width={1200} height={600} margin={{ top: 100, right: 20, bottom: 50, left: 0 }} data={tickerData} >
                 <defs>
                 <linearGradient id="chartArea" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#60afeb" stopOpacity={0.8}/>

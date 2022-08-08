@@ -37,29 +37,31 @@ function Search({searchText, setSearchText, handleSearch}:searchProps){
 
     return(
         <div>            
-            <form action="#" onSubmit={(e) => {e.preventDefault(); handleSearch()}}>
+          <form action="#" onSubmit={(e) => {e.preventDefault(); handleSearch()}}>
             <input 
               type="text"
               name="searchText"
               id="searchText"
               value={searchText}
+              autoComplete={"off"}
               onChange={e => {
                   setSearchText(e.target.value);
               }}
             />
-            <div className='reccomendations'>
-              {reccomendations.map((rec, idx) => {
-                  return(
-                    <SearchReccomendation 
-                      reccomendation={rec}
-                      setSearchText={setSearchText}
-                    />
-                  )
-                })
-              }
-            </div>
             <button type="submit">search</button>
         </form>
+        {reccomendations && <div className='reccomendations'>
+                {reccomendations.map((rec, idx) => {
+                    return(
+                      <SearchReccomendation 
+                        reccomendation={rec}
+                        setSearchText={setSearchText}
+                      />
+                    )
+                  })
+                }
+              </div>
+            }
     </div>
   )
 }

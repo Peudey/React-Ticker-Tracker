@@ -19,6 +19,30 @@ h1{
   color: #888;
 }
 
+.chart {
+  z-index: -1;
+}
+
 .chart p {
   color: black;
+}
+
+.reccomendations {
+  z-index: 10;
+  position: absolute;
+  left: 40%;
+  width: 20%;
+  color: black;
+  border-radius: 4px;
+}
+
+.reccomendation {
+  border: 1px solid black;
+  background-color: white;
+}
+
+.reccomendation:hover{
+  transition: color .25s, background-color .25s;
+  color:white;
+  background-color: rgb(119, 117, 117);
 }
