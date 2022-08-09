@@ -42,18 +42,22 @@ function Graph() {
 
     return (
         <div>
-            <p>{symbol} ({desc})</p>
             <div>
               <Search 
                 searchText = {searchText}
                 setSearchText = {setSearchText}
                 handleSearch = {handleSearch}
               />
+            </div>
+            <span className='chart'>
+            <div style={{textAlign:"left",  position: "relative", left: "3%"}}>
+              <p >{symbol} ({desc})</p>
+            </div>
+            <div className='chartButtons'>
               <button onClick={() => handleFilter(7)}>7</button>
               <button onClick={() => handleFilter(31)}>M</button>
               <button onClick={() => handleFilter(365)}>Y</button>
             </div>
-            <span className='chart'>
               <AreaChart width={1200} height={600} margin={{ top: 20, right: 20, bottom: 50, left: 0 }} data={tickerData} >
                 <defs>
                 <linearGradient id="chartArea" x1="0" y1="0" x2="0" y2="1">
