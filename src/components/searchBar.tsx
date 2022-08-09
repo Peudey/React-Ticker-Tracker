@@ -10,6 +10,7 @@ interface searchProps{
 
 function Search({searchText, setSearchText, handleSearch}:searchProps){
     const [reccomendations, setReccomendations] = useState<string[]>([]);
+    const [searching, setSearching] = useState(false);
 
     useEffect(() =>{
       const timer = setTimeout(()=>{
@@ -44,13 +45,15 @@ function Search({searchText, setSearchText, handleSearch}:searchProps){
               id="searchText"
               value={searchText}
               autoComplete={"off"}
+              onFocus={()=>setSearching(true)}
+              onBlur={()=>setSearching(false)}
               onChange={e => {
                   setSearchText(e.target.value);
               }}
             />
             <button type="submit">search</button>
         </form>
-        {reccomendations && <div className='reccomendations'>
+        {reccomendations && searching && <div className='reccomendations'>
                 {reccomendations.map((rec, idx) => {
                     return(
                       <SearchReccomendation 

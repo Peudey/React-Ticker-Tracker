@@ -49,10 +49,10 @@ function Graph() {
                 setSearchText = {setSearchText}
                 handleSearch = {handleSearch}
               />
-              <button onClick={() => handleFilter(7)}>7</button>
-              <button onClick={() => handleFilter(31)}>M</button>
-              <button onClick={() => handleFilter(365)}>Y</button>
             </div>
+            <button onClick={() => handleFilter(7)}>7</button>
+            <button onClick={() => handleFilter(31)}>M</button>
+            <button onClick={() => handleFilter(365)}>Y</button>
             <span className='chart'>
               <AreaChart width={1200} height={600} margin={{ top: 100, right: 20, bottom: 50, left: 0 }} data={tickerData} >
                 <defs>
