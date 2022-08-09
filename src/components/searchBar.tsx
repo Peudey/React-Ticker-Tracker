@@ -37,7 +37,11 @@ function Search({searchText, setSearchText, handleSearch}:searchProps){
       }
 
     return(
-        <div>            
+        <div           
+          onFocus={()=>setSearching(true)}
+          onBlur={()=>setSearching(false)}
+          tabIndex={0}
+        >            
           <form action="#" onSubmit={(e) => {e.preventDefault(); handleSearch()}}>
             <input 
               type="text"
@@ -45,8 +49,6 @@ function Search({searchText, setSearchText, handleSearch}:searchProps){
               id="searchText"
               value={searchText}
               autoComplete={"off"}
-              onFocus={()=>setSearching(true)}
-              onBlur={()=>setSearching(false)}
               onChange={e => {
                   setSearchText(e.target.value);
               }}
