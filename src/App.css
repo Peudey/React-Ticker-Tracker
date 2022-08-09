@@ -23,8 +23,15 @@ h1{
   z-index: -1;
 }
 
-.chart p {
-  color: black;
+.chartButtons{
+  position: relative;
+  left: 3%;
+  height: 5vh;
+}
+
+.chartButtons button{
+ float: left;
+ margin-right: .5rem;
 }
 
 .reccomendations {
