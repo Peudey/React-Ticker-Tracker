@@ -37,7 +37,8 @@ function Search({searchText, setSearchText, handleSearch}:searchProps){
       }
 
     return(
-        <div           
+        <div 
+          className='search'          
           onFocus={()=>setSearching(true)}
           onBlur={()=>setSearching(false)}
           tabIndex={0}
@@ -53,10 +54,10 @@ function Search({searchText, setSearchText, handleSearch}:searchProps){
                   setSearchText(e.target.value);
               }}
             />
-            <button type="submit">search</button>
+            <button type="submit">Search</button>
         </form>
         {reccomendations && searching && <div className='reccomendations'>
-                {reccomendations.map((rec, idx) => {
+                {reccomendations.map((rec) => {
                     return(
                       <SearchReccomendation 
                         reccomendation={rec}

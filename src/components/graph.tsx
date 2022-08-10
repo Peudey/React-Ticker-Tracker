@@ -10,6 +10,7 @@ function Graph() {
     const [tickerData, setTickerData] = useState<any[]>([]);
     const [searchText, setSearchText] = useState("googl");
     const [timeframe, setTimeframe] = useState(30);
+    const [resolution, setResolution] = useState("D");
   
     useEffect(() => {
       refreshChart();
@@ -26,7 +27,7 @@ function Graph() {
 
     const refreshChart = async() => {
       var formattedData:any[] = [];
-      var json = await getTickerData(symbol, timeframe);
+      var json = await getTickerData(symbol, timeframe, resolution);
       for(var i = 0; i < json.c?.length; i++) {
         formattedData.push({
           date: new Date(json?.t[i] * 1000).toLocaleDateString('en-US', {timeZone:"Europe/London"}),
@@ -36,8 +37,9 @@ function Graph() {
       setTickerData(formattedData);
     }
 
-    const handleFilter = (length: number) => {
+    const handleFilter = (length: number, resolution: string) => {
       setTimeframe(length);
+      setResolution(resolution);
     }
 
     return (
@@ -54,9 +56,9 @@ function Graph() {
               <p >{symbol} ({desc})</p>
             </div>
             <div className='chartButtons'>
-              <button onClick={() => handleFilter(7)}>7</button>
-              <button onClick={() => handleFilter(31)}>M</button>
-              <button onClick={() => handleFilter(365)}>Y</button>
+              <button onClick={() => handleFilter(7,"15")}>7</button>
+              <button onClick={() => handleFilter(31,"D")}>M</button>
+              <button onClick={() => handleFilter(365,"D")}>Y</button>
             </div>
               <AreaChart width={1200} height={600} margin={{ top: 20, right: 20, bottom: 50, left: 0 }} data={tickerData} >
                 <defs>
@@ -71,7 +73,6 @@ function Graph() {
                   <Tooltip labelStyle={{color: "black"}} itemStyle={{color: "black"}}/>
               </AreaChart>
             </span>
-            <News symbol={symbol}/>
         </div>
     )
 }
